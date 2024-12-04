@@ -437,7 +437,12 @@ def myIBCF(newuser, S, rating_matrix):
     return recommended_movies
 
 # Select a sample of movies to display
-sample_movies = movies.sample(100, random_state=42).reset_index(drop=True)
+# sample_movies = movies.sample(100, random_state=42).reset_index(drop=True)
+# Extract movie IDs from S.columns
+movie_ids = [int(mid[1:]) for mid in S.columns]  # Remove 'm' prefix and convert to int
+# Filter movies to include only the top 100 movies
+sample_movies = movies[movies['movieID'].isin(movie_ids)].reset_index(drop=True)
+
 
 # Set the title of the app
 st.title("Movie Recommender System")
